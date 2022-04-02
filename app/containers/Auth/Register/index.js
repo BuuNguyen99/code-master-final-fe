@@ -1,20 +1,19 @@
-import { compose } from 'redux';
-import React, { memo, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import success from 'assets/images/success.jpg';
-import saga from 'containers/Auth/saga';
-import reducer from 'containers/Auth/reducer';
-import { useInjectReducer } from 'utils/injectReducer';
-import { useInjectSaga } from 'utils/injectSaga';
-import { verifyAccount } from '../actions';
+import { compose } from "redux";
+import React, { memo, useEffect } from "react";
+import { connect } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import saga from "containers/Auth/saga";
+import reducer from "containers/Auth/reducer";
+import { useInjectReducer } from "utils/injectReducer";
+import { useInjectSaga } from "utils/injectSaga";
+import { verifyAccount } from "../actions";
 
-const key = 'auth';
+const key = "auth";
 
 function Register({ onVerifyAccount }) {
   const history = useHistory();
   const { search } = useLocation();
-  const code = new URLSearchParams(search).get('code');
+  const code = new URLSearchParams(search).get("code");
 
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -44,7 +43,7 @@ function Register({ onVerifyAccount }) {
               <button
                 type="submit"
                 className="mt-5"
-                onClick={() => history.replace('/auth/login')}
+                onClick={() => history.replace("/auth/login")}
               >
                 Login
               </button>
@@ -58,16 +57,16 @@ function Register({ onVerifyAccount }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onVerifyAccount: data => dispatch(verifyAccount(data)),
+    onVerifyAccount: (data) => dispatch(verifyAccount(data)),
   };
 }
 
 const withConnect = connect(
   null,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 export default compose(
   withConnect,
-  memo,
+  memo
 )(Register);
