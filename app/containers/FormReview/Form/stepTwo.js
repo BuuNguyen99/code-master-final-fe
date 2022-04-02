@@ -10,27 +10,18 @@ const StepTwo = ({
   prevStep,
   values,
 }) => {
-  //creating error state for validation
-  const [error, setError] = useState(false);
-
   // after form submit validating the form data using validator
   const submitFormData = (e) => {
     e.preventDefault();
-
-    // checking if value of first name and last name is empty show error else take to next step
-    // if (validator.isEmpty(values.age) || validator.isEmpty(values.email)) {
-    //   setError(true);
-    // } else {
     nextStep();
-    // }
   };
   return (
     <>
       <Card>
         <Card.Body>
-          <Form onSubmit={submitFormData}>
+          <Form onSubmit={submitFormData} className="form-evaluation">
             <Form.Group className="mb-5">
-              <Form.Label className="required">Communication</Form.Label>
+              <Form.Label>Communication</Form.Label>
               <p className="text-content">
                 Measures how well this individual gets along with fellow
                 employees, respects the rights of other employees and shows a
@@ -93,7 +84,7 @@ const StepTwo = ({
               </div>
             </Form.Group>
             <Form.Group className="mb-5">
-              <Form.Label className="required">
+              <Form.Label>
                 What you think your co-worker are doing good and should keep
                 going? (Điểm bạn thấy đồng nghiệp đang làm tốt nên tiếp tục phát
                 huy)
@@ -106,13 +97,13 @@ const StepTwo = ({
                   name="coWorker"
                   defaultValue={values.coWorker}
                   type="text"
-                  placeholder="Your email"
+                  placeholder="Your answer"
                   onChange={handleFormData("coWorker")}
                 />
               </div>
             </Form.Group>
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <Button variant="primary" onClick={prevStep}>
+            <div className="button-group">
+              <Button variant="primary" onClick={prevStep} className="mx-5">
                 Previous
               </Button>
 

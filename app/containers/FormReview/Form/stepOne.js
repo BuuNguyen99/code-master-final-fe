@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Form, Card, Button } from "react-bootstrap";
-import validator from "validator";
-
 // creating functional component ans getting props from app.js and destucturing them
 const StepOne = ({
   nextStep,
@@ -16,13 +14,7 @@ const StepOne = ({
   // after form submit validating the form data using validator
   const submitFormData = (e) => {
     e.preventDefault();
-
-    // // checking if value of first name and last name is empty show error else take to step 2
-    // if (validator.isEmpty(values.email) || validator.isEmpty(values.teamwork)) {
-    //   setError(true);
-    // } else {
     nextStep();
-    // }
   };
 
   return (
@@ -32,7 +24,7 @@ const StepOne = ({
           <Form onSubmit={submitFormData} className="form-evaluation">
             <div>
               <Form.Group className="mb-5">
-                <Form.Label className="required">Email</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   style={{ border: error ? "2px solid red" : "" }}
                   name="email"
@@ -41,16 +33,9 @@ const StepOne = ({
                   placeholder="Your email"
                   onChange={handleFormData("email")}
                 />
-                {error ? (
-                  <Form.Text style={{ color: "red", fontSize: "12px" }}>
-                    This is a required field
-                  </Form.Text>
-                ) : (
-                  ""
-                )}
               </Form.Group>
               <Form.Group className="mb-5">
-                <Form.Label className="required">Teamwork</Form.Label>
+                <Form.Label>Teamwork</Form.Label>
                 <p className="text-content">
                   Measures how well this individual gets along with fellow
                   employees, respects the rights of other employees and shows a
@@ -113,9 +98,7 @@ const StepOne = ({
                 </div>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label className="required">
-                  Do you want to work with him/her?
-                </Form.Label>
+                <Form.Label>Do you want to work with him/her?</Form.Label>
 
                 <div class="form-check">
                   <input
@@ -158,9 +141,11 @@ const StepOne = ({
                 </div>
               </Form.Group>
             </div>
-            <Button variant="primary" type="submit">
-              Continue
-            </Button>
+            <div className="button-group">
+              <Button variant="primary" type="submit">
+                Continue
+              </Button>
+            </div>
           </Form>
         </Card.Body>
       </Card>

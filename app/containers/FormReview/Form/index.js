@@ -4,7 +4,7 @@ import StepTwo from "./stepTwo";
 import StepOne from "./stepOne";
 import StepThree from "./stepThree";
 
-function FormRevivewInput() {
+function FormRevivewInput({ setStepPage }) {
   //state for steps
   const [step, setstep] = useState(1);
 
@@ -23,11 +23,13 @@ function FormRevivewInput() {
   // function for going to next step by increasing step state by 1
   const nextStep = () => {
     setstep(step + 1);
+    setStepPage(step + 1);
   };
 
   // function for going to previous step by decreasing step state by 1
   const prevStep = () => {
     setstep(step - 1);
+    setStepPage(step - 1);
   };
 
   // handling form input data by taking onchange value and updating our previous form data state
@@ -102,7 +104,12 @@ function FormRevivewInput() {
           <Container>
             <Row>
               <Col>
-                <StepThree values={formData} handleFormData={handleInputData} />
+                <StepThree
+                  nextStep={nextStep}
+                  values={formData}
+                  handleFormData={handleInputData}
+                  prevStep={prevStep}
+                />
               </Col>
             </Row>
           </Container>
