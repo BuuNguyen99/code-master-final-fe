@@ -15,7 +15,7 @@ export const initialState = {
   dataAddUser: {
     isFetching: false,
   },
-  dataEditsUser: {
+  dataEditUser: {
     isFetching: false,
   },
   dataDetailUser: {
@@ -41,7 +41,7 @@ const authReducer = (state = initialState, action) =>
         draft.dataDetailUser.isFetching = true;
         break;
       case SUCCESS(GET_DETAIL_USER):
-        draft.dataDetailUser.data = action.payload.data;
+        draft.dataDetailUser.data = action.payload;
         draft.dataDetailUser.isFetching = false;
         break;
       case FAILURE(GET_DETAIL_USER):
@@ -57,13 +57,13 @@ const authReducer = (state = initialState, action) =>
         draft.dataAddUser.isFetching = false;
         break;
       case REQUEST(EDIT_USER_ACTION):
-        draft.dataEditsUser.isFetching = true;
+        draft.dataEditUser.isFetching = true;
         break;
       case SUCCESS(EDIT_USER_ACTION):
-        draft.dataEditsUser.isFetching = false;
+        draft.dataEditUser.isFetching = false;
         break;
       case FAILURE(EDIT_USER_ACTION):
-        draft.dataEditsUser.isFetching = false;
+        draft.dataEditUser.isFetching = false;
         break;
       default:
         break;

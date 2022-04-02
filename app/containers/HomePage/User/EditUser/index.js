@@ -57,6 +57,7 @@ function EditUser({
           {!dataDetailUser?.isFetching ? (
             <div className="form-user">
               <FromUser
+                id={id}
                 isLoading={dataEditUser?.isFetching}
                 dataUserDetail={dataDetailUser?.data}
                 onUpdateUser={onUpdateUser}

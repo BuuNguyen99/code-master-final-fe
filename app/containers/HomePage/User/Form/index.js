@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
+import { format, parseISO } from "date-fns";
 
-function FromUser({ onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
+function FromUser({ id, onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
   const history = useHistory();
+
+  const formatDate = (date) => {
+    if (date) return format(parseISO(date), "yyyy-MM-dd");
+  };
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
@@ -30,9 +35,24 @@ function FromUser({ onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { register, handleSubmit, setValue, formState } = useForm(formOptions);
   const { errors } = formState;
 
+  useEffect(() => {
+    if (dataUserDetail) {
+      setValue("firstName", dataUserDetail?.firstName || "");
+      setValue("lastName", dataUserDetail?.lastName || "");
+      setValue(
+        "onboardDate",
+        dataUserDetail?.onboardAt ? formatDate(dataUserDetail?.onboardAt) : ""
+      );
+      setValue(
+        "officalDate",
+        dataUserDetail?.officialAt ? formatDate(dataUserDetail?.officialAt) : ""
+      );
+      setValue("email", dataUserDetail?.email || "");
+    }
+  }, [dataUserDetail]);
   function onSubmit(data) {
     const dataUser = {
       email: data.email,
@@ -43,7 +63,8 @@ function FromUser({ onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
     };
 
     if (dataUserDetail) {
-      onUpdateUser(dataUser, handleCallBackEditUser);
+      delete dataUser.email;
+      onUpdateUser(id, dataUser, handleCallBackEditUser);
       return;
     }
     onAddUser(dataUser, handleCallBackUser);
@@ -108,7 +129,6 @@ function FromUser({ onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
                 name="onboardDate"
                 type="date"
                 {...register("onboardDate")}
-                pattern="\d{4}-\d{2}-\d{2}"
                 className={`form-control ${
                   errors.onboardDate ? "is-invalid" : ""
                 }`}
@@ -120,6 +140,7 @@ function FromUser({ onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
             <div className="form-group col-6">
               <label className="required">Email</label>
               <input
+                disabled={dataUserDetail}
                 name="email"
                 type="text"
                 {...register("email")}

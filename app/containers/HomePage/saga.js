@@ -48,11 +48,7 @@ export function* createUserSaga({ dataUser, callBack }) {
 }
 
 function updateUserApi(params, dataUser) {
-  return Api.post(API.UPDATE_USER_API, dataUser, {
-    params: {
-      ...params,
-    },
-  });
+  return Api.put(`${API.UPDATE_USER_API}/${params}`, dataUser);
 }
 
 export function* updateUserSaga({ id, dataUser, callBack }) {
@@ -60,7 +56,7 @@ export function* updateUserSaga({ id, dataUser, callBack }) {
     const response = yield call(updateUserApi, id, dataUser);
     const { data } = response;
     yield put({
-      type: SUCCESS(U),
+      type: SUCCESS(EDIT_USER_ACTION),
       payload: data,
     });
     callBack?.();
