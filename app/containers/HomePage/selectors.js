@@ -21,9 +21,16 @@ const makeSelectDataEditUser = () =>
     (userPage) => userPage.dataEditUser
   );
 
+const makeSelectDataDetailUser = () =>
+  createSelector(
+    selectHomePage,
+    (userPage) => userPage.dataDetailUser
+  );
+
 export {
   selectHomePage,
   makeSelectDataListUser,
   makeSelectDataEditUser,
   makeSelectDataAddUser,
+  makeSelectDataDetailUser,
 };

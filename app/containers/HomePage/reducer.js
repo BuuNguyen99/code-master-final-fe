@@ -4,6 +4,7 @@ import {
   GET_LIST_USER,
   EDIT_USER_ACTION,
   ADD_USER_ACTION,
+  GET_DETAIL_USER,
 } from "containers/HomePage/constants";
 
 export const initialState = {
@@ -17,6 +18,10 @@ export const initialState = {
   dataEditsUser: {
     isFetching: false,
   },
+  dataDetailUser: {
+    data: [],
+    isFetching: false,
+  },
 };
 
 const authReducer = (state = initialState, action) =>
@@ -26,11 +31,21 @@ const authReducer = (state = initialState, action) =>
         draft.dataListUSer.isFetching = true;
         break;
       case SUCCESS(GET_LIST_USER):
-        draft.dataListUSer.data = payload.datas;
+        draft.dataListUSer.data = action.payload.data;
         draft.dataListUSer.isFetching = false;
         break;
       case FAILURE(GET_LIST_USER):
         draft.dataListUSer.isFetching = false;
+        break;
+      case REQUEST(GET_DETAIL_USER):
+        draft.dataDetailUser.isFetching = true;
+        break;
+      case SUCCESS(GET_DETAIL_USER):
+        draft.dataDetailUser.data = action.payload.data;
+        draft.dataDetailUser.isFetching = false;
+        break;
+      case FAILURE(GET_DETAIL_USER):
+        draft.dataDetailUser.isFetching = false;
         break;
       case REQUEST(ADD_USER_ACTION):
         draft.dataAddUser.isFetching = true;

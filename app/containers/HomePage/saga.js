@@ -6,6 +6,7 @@ import {
   GET_LIST_USER,
   EDIT_USER_ACTION,
   ADD_USER_ACTION,
+  GET_DETAIL_USER,
 } from "containers/HomePage/constants";
 
 const { API } = ENDPOINT;
@@ -31,7 +32,7 @@ function createUserApi(dataUser) {
   return Api.post(API.CREATE_USER_API, dataUser);
 }
 
-export function* createUserSaga({ dataUser }) {
+export function* createUserSaga({ dataUser, callBack }) {
   try {
     const response = yield call(createUserApi, dataUser);
     const { data } = response;
@@ -39,7 +40,9 @@ export function* createUserSaga({ dataUser }) {
       type: SUCCESS(ADD_USER_ACTION),
       payload: data,
     });
+    callBack?.();
   } catch (error) {
+    callBack?.(error);
     yield put({ type: FAILURE(ADD_USER_ACTION), error });
   }
 }
@@ -52,7 +55,7 @@ function updateUserApi(params, dataUser) {
   });
 }
 
-export function* updateUserSaga({ id, dataUser }) {
+export function* updateUserSaga({ id, dataUser, callBack }) {
   try {
     const response = yield call(updateUserApi, id, dataUser);
     const { data } = response;
@@ -60,8 +63,27 @@ export function* updateUserSaga({ id, dataUser }) {
       type: SUCCESS(U),
       payload: data,
     });
+    callBack?.();
   } catch (error) {
+    callBack?.(error);
     yield put({ type: FAILURE(EDIT_USER_ACTION), error });
+  }
+}
+
+function getDetailApi(params) {
+  return Api.get(`${API.GET_DETAIL_API}/${params}`);
+}
+
+export function* getDetailUserSaga({ id }) {
+  try {
+    const response = yield call(getDetailApi, id);
+    const { data } = response;
+    yield put({
+      type: SUCCESS(GET_DETAIL_USER),
+      payload: data,
+    });
+  } catch (error) {
+    yield put({ type: FAILURE(GET_DETAIL_USER), error });
   }
 }
 
@@ -69,4 +91,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(GET_LIST_USER), getListUserSaga);
   yield takeLatest(REQUEST(ADD_USER_ACTION), createUserSaga);
   yield takeLatest(REQUEST(EDIT_USER_ACTION), updateUserSaga);
+  yield takeLatest(REQUEST(GET_DETAIL_USER), getDetailUserSaga);
 }

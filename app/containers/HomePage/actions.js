@@ -3,6 +3,7 @@ import {
   GET_LIST_USER,
   EDIT_USER_ACTION,
   ADD_USER_ACTION,
+  GET_DETAIL_USER,
 } from "containers/HomePage/constants";
 
 export function getListUser() {
@@ -11,17 +12,26 @@ export function getListUser() {
   };
 }
 
-export function createUser(dataUser) {
+export function createUser(dataUser, callBack) {
   return {
     type: REQUEST(ADD_USER_ACTION),
     dataUser,
+    callBack,
   };
 }
 
-export function updateUser(id, dataUser) {
+export function updateUser(id, dataUser, callBack) {
   return {
     type: REQUEST(EDIT_USER_ACTION),
     id,
     dataUser,
+    callBack,
+  };
+}
+
+export function getDetailUser(id) {
+  return {
+    type: REQUEST(GET_DETAIL_USER),
+    id,
   };
 }

@@ -25,8 +25,8 @@ function AddUser({ onAddUser, dataAddUser }) {
             <img src={logo} alt="" />
             <h1 className="title"> Welcome to Rising Stars</h1>
             <p className="content">
-              Discover Simply Amazing Admin Dashboard With The Stunning Design
-              System
+              Rising Stars - a home where young and enthusiastic engineers
+              gather and work in Da Nang, Vietnam.
             </p>
           </div>
         </div>
@@ -57,7 +57,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAddUser: (data) => dispatch(createUser(data)),
+    onAddUser: (data, callBack) => dispatch(createUser(data, callBack)),
   };
 }
 

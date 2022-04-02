@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 
-function FromUser({ onAddUser, isLoading }) {
+function FromUser({ onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
   const history = useHistory();
 
   const validationSchema = Yup.object().shape({
@@ -41,8 +42,30 @@ function FromUser({ onAddUser, isLoading }) {
       official_at: data.officalDate,
     };
 
-    onAddUser(dataUser);
+    if (dataUserDetail) {
+      onUpdateUser(dataUser, handleCallBackEditUser);
+      return;
+    }
+    onAddUser(dataUser, handleCallBackUser);
   }
+
+  const handleCallBackUser = (error) => {
+    if (error) {
+      toast.error("Create User Failured");
+      return;
+    }
+    toast.success("Create User Successfully");
+    history.push("/");
+  };
+
+  const handleCallBackEditUser = (error) => {
+    if (error) {
+      toast.error("Update User Failured");
+      return;
+    }
+    toast.success("Update User Successfully");
+    history.push("/");
+  };
 
   return (
     <div className="card">
@@ -79,12 +102,13 @@ function FromUser({ onAddUser, isLoading }) {
             </div>
           </div>
           <div className="form-row row my-5">
-            <div className="form-group col">
+            <div className="form-group col-4">
               <label className="required">Onboard Date</label>
               <input
                 name="onboardDate"
                 type="date"
                 {...register("onboardDate")}
+                pattern="\d{4}-\d{2}-\d{2}"
                 className={`form-control ${
                   errors.onboardDate ? "is-invalid" : ""
                 }`}
@@ -93,7 +117,7 @@ function FromUser({ onAddUser, isLoading }) {
                 {errors.onboardDate?.message}
               </div>
             </div>
-            <div className="form-group col">
+            <div className="form-group col-6">
               <label className="required">Email</label>
               <input
                 name="email"
@@ -106,7 +130,7 @@ function FromUser({ onAddUser, isLoading }) {
             </div>
           </div>
           <div className="form-row row my-5">
-            <div className="form-group col">
+            <div className="form-group col-10">
               <label className="required"> Offical Date</label>
               <input
                 name="officalDate"
@@ -121,8 +145,11 @@ function FromUser({ onAddUser, isLoading }) {
               </div>
             </div>
           </div>
-          <div className="form-group my-5">
-            <button type="submit" className="btn btn-primary mr-1">
+          <div className="form-group my-5 group-form-button">
+            <button
+              type="submit"
+              className="btn btn-primary mr-1 btn-save-form"
+            >
               {isLoading && (
                 <div class="spinner-border text-light" role="status" />
               )}
