@@ -1,14 +1,14 @@
 /* eslint-disable func-names */
-import axios from 'axios';
-import { isNil } from 'lodash-es';
-import { mergeWith } from 'lodash';
-import { camelizeKeys } from 'humps';
-import { stringifyParams } from 'utils/common';
-import { API_BASE_URL } from 'shared/configs/setting';
-import { CookiesStorage } from 'shared/configs/cookie';
+import axios from "axios";
+import { isNil } from "lodash-es";
+import { mergeWith } from "lodash";
+import { camelizeKeys } from "humps";
+import { stringifyParams } from "utils/common";
+import { API_BASE_URL } from "shared/configs/setting";
+import { CookiesStorage } from "shared/configs/cookie";
 
 const customizer = (objValue, srcValue, key) => {
-  if (key === 'Accept-Language') {
+  if (key === "Accept-Language") {
     return objValue;
   }
 };
@@ -22,7 +22,7 @@ const defaultOptions = {};
 function getNotAuthApi(path, options = {}, apiURL) {
   const online = navigator.onLine;
   if (!online) return;
-  return axios.get(`${apiURL || API_BASE_URL}/${path.replace(/^\//, '')}`, {
+  return axios.get(`${apiURL || API_BASE_URL}/${path.replace(/^\//, "")}`, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -33,7 +33,7 @@ function getNotAuthApi(path, options = {}, apiURL) {
 
 function getApi(path, options = {}, apiURL) {
   // const { params } = options;
-  return axios.get(`${apiURL || API_BASE_URL}/${path.replace(/^\//, '')}`, {
+  return axios.get(`${apiURL || API_BASE_URL}/${path.replace(/^\//, "")}`, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -47,10 +47,10 @@ function postApi(path, data, options = {}, isAuth = true) {
   const headerParams = mergeWith(
     options.headers,
     isAuth ? generateToken() : {},
-    customizer,
+    customizer
   );
 
-  return axios.post(`${API_BASE_URL}/${path.replace(/^\//, '')}`, data, {
+  return axios.post(`${API_BASE_URL}/${path.replace(/^\//, "")}`, data, {
     ...defaultOptions,
     ...options,
     headers: headerParams,
@@ -58,7 +58,7 @@ function postApi(path, data, options = {}, isAuth = true) {
 }
 
 function putApi(path, data, options = {}) {
-  return axios.put(`${API_BASE_URL}/${path.replace(/^\//, '')}`, data, {
+  return axios.put(`${API_BASE_URL}/${path.replace(/^\//, "")}`, data, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -69,7 +69,7 @@ function putApi(path, data, options = {}) {
 }
 
 function patchApi(path, data, options = {}) {
-  return axios.patch(`${API_BASE_URL}/${path.replace(/^\//, '')}`, data, {
+  return axios.patch(`${API_BASE_URL}/${path.replace(/^\//, "")}`, data, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -80,7 +80,7 @@ function patchApi(path, data, options = {}) {
 }
 
 function deleteApi(path, data, options = {}) {
-  return axios.delete(`${API_BASE_URL}/${path.replace(/^\//, '')}`, {
+  return axios.delete(`${API_BASE_URL}/${path.replace(/^\//, "")}`, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -94,30 +94,30 @@ function deleteApi(path, data, options = {}) {
 function uploadApi(path, files, options = {}, uploadSingle = false) {
   const formData = new FormData();
   uploadSingle
-    ? files.forEach(file => {
+    ? files.forEach((file) => {
         formData.append(`file`, file);
       })
     : files.forEach((file, index) => {
         formData.append(`file[${index}]`, file);
       });
 
-  return axios.post(`${API_BASE_URL}/${path.replace(/^\//, '')}`, formData, {
+  return axios.post(`${API_BASE_URL}/${path.replace(/^\//, "")}`, formData, {
     ...defaultOptions,
     ...options,
     headers: {
       ...options.headers,
       ...generateToken(),
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
     },
   });
 }
 
 function redirectTo() {
-  window.location.href = 'auth/login';
+  window.location.href = "auth/login";
 }
 
 function redirectToNotFoundPage() {
-  window.location.href = '/pageNotFound';
+  window.location.href = "/pageNotFound";
 }
 
 function handleErrorStatus(error) {
@@ -128,14 +128,14 @@ function handleErrorStatus(error) {
     case 400:
       return error?.response;
     case 401:
-      CookiesStorage.clearData();
-      redirectTo();
+      // CookiesStorage.clearData();
+      // redirectTo();
       return error.response;
     case 403:
-      window.location.reload();
+      // window.location.reload();
       return error.response;
     case 404:
-      redirectToNotFoundPage();
+      // redirectToNotFoundPage();
       return error;
     case 409:
       return error?.response;
@@ -150,24 +150,24 @@ function handleErrorStatus(error) {
 }
 
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     if (response && response.data) {
       response.data = camelizeKeys(response.data);
     }
     return handleErrorStatus(response);
   },
-  error => {
+  (error) => {
     if (error?.response?.statusCode === 401) {
       CookiesStorage.clearData();
       redirectTo();
     }
     return Promise.reject(handleErrorStatus(error));
-  },
+  }
 );
 
-axios.interceptors.request.use(config => {
+axios.interceptors.request.use((config) => {
   const newConfig = { ...config };
-  if (newConfig.headers['Content-Type'] === 'multipart/form-data')
+  if (newConfig.headers["Content-Type"] === "multipart/form-data")
     return newConfig;
   // if (config.params) {
   //   newConfig.params = decamelizeKeys(config.params);
@@ -178,7 +178,7 @@ axios.interceptors.request.use(config => {
   return newConfig;
 });
 
-axios.defaults.paramsSerializer = params =>
+axios.defaults.paramsSerializer = (params) =>
   stringifyParams({
     params: { ...params },
     option: {

@@ -1,11 +1,11 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { StickyContainer } from "react-sticky";
-import Header from "components/Header";
-import Footer from "components/Footer";
 import { Switch, Route } from "react-router-dom";
 import HomePage from "containers/HomePage";
 import FormRevivew from "../FormReview";
+import AddUser from "../HomePage/User/AddUser";
+import EditUser from "../HomePage/User/EditUser";
 
 export default function MasterLayout() {
   return (
@@ -18,6 +18,8 @@ export default function MasterLayout() {
           <Switch>
             <Route path="/" component={HomePage} exact />
             <Route path="/form-review" component={FormRevivew} exact />
+            <Route path="/add-user" component={AddUser} />
+            <Route path="/edit-user/:id" component={EditUser} />
           </Switch>
         </div>
       </div>
