@@ -30,49 +30,49 @@ const StepTwo = ({
                 những người khác và thể hiện tinh thần hợp tác, giúp đỡ lẫn
                 nhau)
               </p>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="teamwork1"
                   id="teamwork1"
                   checked={values?.communication === 1}
                   onClick={() => handleChangeCheckBoxCommunitation(1)}
                 />
-                <label class="form-check-label" for="teamwork1">
+                <label className="form-check-label" for="teamwork1">
                   Bad
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
                   checked={values?.communication === 2}
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="teamwork2"
                   id="teamwork2"
                   onClick={() => handleChangeCheckBoxCommunitation(2)}
                 />
-                <label class="form-check-label" for="teamwork2">
+                <label className="form-check-label" for="teamwork2">
                   Normal
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
                   checked={values?.communication === 3}
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="teamwork3"
                   id="teamwork3"
                   onClick={() => handleChangeCheckBoxCommunitation(3)}
                 />
-                <label class="form-check-label" for="teamwork3">
+                <label className="form-check-label" for="teamwork3">
                   Good
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
                   checked={values?.communication === 4}
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="teamwork4"
                   id="teamwork4"
@@ -89,9 +89,9 @@ const StepTwo = ({
                 going? (Điểm bạn thấy đồng nghiệp đang làm tốt nên tiếp tục phát
                 huy)
               </Form.Label>
-              <div class="form-group">
+              <div className="form-group">
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlTextarea1"
                   rows="5"
                   name="coWorker"

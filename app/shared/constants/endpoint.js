@@ -4,6 +4,7 @@ export const ENDPOINT = {
     CREATE_USER_API: "/users",
     GET_LIST_USER: "/users",
     GET_DETAIL_API: "/users",
+    SUBMIT_FORM: "/evaluations",
   },
   ROUTING: {
     AUTH: "/auth",

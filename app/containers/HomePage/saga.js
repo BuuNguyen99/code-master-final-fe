@@ -7,6 +7,7 @@ import {
   EDIT_USER_ACTION,
   ADD_USER_ACTION,
   GET_DETAIL_USER,
+  SUBMIT_REVIEW_ACTION,
 } from "containers/HomePage/constants";
 
 const { API } = ENDPOINT;
@@ -83,9 +84,29 @@ export function* getDetailUserSaga({ id }) {
   }
 }
 
+function submitFormApi(dataSubmit) {
+  return Api.post(`${API.SUBMIT_FORM}`, dataSubmit);
+}
+
+export function* submitFormsaga({ dataSubmit, callBack }) {
+  try {
+    const response = yield call(submitFormApi, dataSubmit);
+    const { data } = response;
+    yield put({
+      type: SUCCESS(SUBMIT_REVIEW_ACTION),
+      payload: data,
+    });
+    callBack?.();
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(SUBMIT_REVIEW_ACTION), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(GET_LIST_USER), getListUserSaga);
   yield takeLatest(REQUEST(ADD_USER_ACTION), createUserSaga);
   yield takeLatest(REQUEST(EDIT_USER_ACTION), updateUserSaga);
   yield takeLatest(REQUEST(GET_DETAIL_USER), getDetailUserSaga);
+  yield takeLatest(REQUEST(SUBMIT_REVIEW_ACTION), submitFormsaga);
 }

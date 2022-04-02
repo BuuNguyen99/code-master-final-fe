@@ -4,6 +4,7 @@ import {
   EDIT_USER_ACTION,
   ADD_USER_ACTION,
   GET_DETAIL_USER,
+  SUBMIT_REVIEW_ACTION,
 } from "containers/HomePage/constants";
 
 export function getListUser() {
@@ -33,5 +34,13 @@ export function getDetailUser(id) {
   return {
     type: REQUEST(GET_DETAIL_USER),
     id,
+  };
+}
+
+export function submitReview(dataSubmit, callBack) {
+  return {
+    type: REQUEST(SUBMIT_REVIEW_ACTION),
+    dataSubmit,
+    callBack,
   };
 }

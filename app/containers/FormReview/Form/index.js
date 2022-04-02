@@ -4,13 +4,12 @@ import StepTwo from "./stepTwo";
 import StepOne from "./stepOne";
 import StepThree from "./stepThree";
 
-function FormRevivewInput({ setStepPage }) {
+function FormRevivewInput({ setStepPage, decoded }) {
   //state for steps
   const [step, setstep] = useState(1);
 
   //state for form data
   const [formData, setFormData] = useState({
-    email: "",
     employeeName: "",
     teamwork: "",
     communication: "",
@@ -55,6 +54,9 @@ function FormRevivewInput({ setStepPage }) {
     setFormData({ ...formData, communication: value });
   };
 
+  const handleCheckProblems = (value) => {
+    setFormData({ ...formData, anything: value });
+  };
   // javascript switch case to show different form in each step
   switch (step) {
     // case 1 to show stepOne form and passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
@@ -105,6 +107,8 @@ function FormRevivewInput({ setStepPage }) {
             <Row>
               <Col>
                 <StepThree
+                  handleCheckProblems={handleCheckProblems}
+                  decoded={decoded}
                   nextStep={nextStep}
                   values={formData}
                   handleFormData={handleInputData}

@@ -27,10 +27,17 @@ const makeSelectDataDetailUser = () =>
     (userPage) => userPage.dataDetailUser
   );
 
+const makeSelectDataSubmitForm = () =>
+  createSelector(
+    selectHomePage,
+    (userPage) => userPage.dataSubmitForm
+  );
+
 export {
   selectHomePage,
   makeSelectDataListUser,
   makeSelectDataEditUser,
   makeSelectDataAddUser,
   makeSelectDataDetailUser,
+  makeSelectDataSubmitForm,
 };

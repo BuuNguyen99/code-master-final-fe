@@ -5,6 +5,7 @@ import {
   EDIT_USER_ACTION,
   ADD_USER_ACTION,
   GET_DETAIL_USER,
+  SUBMIT_REVIEW_ACTION,
 } from "containers/HomePage/constants";
 
 export const initialState = {
@@ -20,6 +21,9 @@ export const initialState = {
   },
   dataDetailUser: {
     data: [],
+    isFetching: false,
+  },
+  dataSubmitForm: {
     isFetching: false,
   },
 };
@@ -64,6 +68,15 @@ const authReducer = (state = initialState, action) =>
         break;
       case FAILURE(EDIT_USER_ACTION):
         draft.dataEditUser.isFetching = false;
+        break;
+      case REQUEST(SUBMIT_REVIEW_ACTION):
+        draft.dataSubmitForm.isFetching = true;
+        break;
+      case SUCCESS(SUBMIT_REVIEW_ACTION):
+        draft.dataSubmitForm.isFetching = false;
+        break;
+      case FAILURE(SUBMIT_REVIEW_ACTION):
+        draft.dataSubmitForm.isFetching = false;
         break;
       default:
         break;

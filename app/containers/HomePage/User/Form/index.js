@@ -64,6 +64,7 @@ function FromUser({ id, onAddUser, isLoading, dataUserDetail, onUpdateUser }) {
 
     if (dataUserDetail) {
       delete dataUser.email;
+      console.log("111");
       onUpdateUser(id, dataUser, handleCallBackEditUser);
       return;
     }
